@@ -93,7 +93,7 @@ html {
 
 #filelist {
   width: 100%;
-  
+
 }
 
 #small-toolpath {
@@ -324,7 +324,7 @@ html {
   border-radius: 4px;
   -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
           box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
-          
+
 }
 .dropdown-menu.pull-right {
   right: 0;
@@ -794,7 +794,7 @@ textarea {
   cursor: pointer;
   border: none;
   min-width: 150px;
-  height: 75px; 
+  height: 75px;
   color: #fff;
   text-transform: uppercase;
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -834,6 +834,13 @@ textarea {
     margin-bottom: 10px;
 }
 
+.ind-label {
+  width: 100%;
+  display: block;
+  padding-top: 10px;
+  border-top: 1px dashed black;
+  font-size: medium;
+}
 
 .buttons-row .arrow {
     font-size: 60px;
@@ -851,7 +858,7 @@ textarea {
   font-size: 16px;
   border: none;
   min-width: 150px;
-  height: 75px; 
+  height: 75px;
   color: #000;
   text-transform: uppercase;
   transition: background-color 0.3s ease, color 0.3s ease;

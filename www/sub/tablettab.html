@@ -12,13 +12,13 @@
             <canvas id = "tlBtn" style="width: 100%; height: 100%"></canvas>
           </div>
           <div class="maslow-grid-item maslow-grid-item-btn" style = "background-color: #9d88c0;" onclick="sendMove('Y+')"><canvas id = "upBtn" style="width: 100%; height: 100%"></canvas></div>
-          <div class="maslow-grid-item maslow-grid-item-btn" style = "background-color: #b69fcb;" onclick="sendMove('X+Y+')"><canvas id = "trBtn" style="width: 100%; height: 100%"></canvas></div>  
-          <div class="maslow-grid-item maslow-grid-item-btn" style = "background-color: #f2f0e4;" onclick="files_select_upload()">Load 
+          <div class="maslow-grid-item maslow-grid-item-btn" style = "background-color: #b69fcb;" onclick="sendMove('X+Y+')"><canvas id = "trBtn" style="width: 100%; height: 100%"></canvas></div>
+          <div class="maslow-grid-item maslow-grid-item-btn" style = "background-color: #f2f0e4;" onclick="files_select_upload()">Load
           File</div>
           <div class="maslow-grid-item maslow-grid-item-btn" style = "background-color: #9d88c0;" onclick="sendMove('X-')"><canvas id = "lBtn" style="width: 100%; height: 100%"></div>
-          <div class="maslow-grid-item maslow-grid-item-btn" style = "background-color: #f2f0e4;"><canvas id = "hBtn" style="width: 100%; height: 100%"></div>  
+          <div class="maslow-grid-item maslow-grid-item-btn" style = "background-color: #f2f0e4;"><canvas id = "hBtn" style="width: 100%; height: 100%"></div>
           <div class="maslow-grid-item maslow-grid-item-btn" style = "background-color: #9d88c0;" onclick="sendMove('X+')"><canvas id = "rBtn" style="width: 100%; height: 100%"></div>
-          <div class="maslow-grid-item maslow-grid-item-btn" style = "background-color: #f2f0e4; font-size: 1vw;" onclick="openModal('calibration-popup');" id = "calibrationBTN" font-size: 1vw;>Setup</div>
+          <div class="maslow-grid-item maslow-grid-item-btn" style = "background-color: #f2f0e4; font-size: 1vw;" onclick="openModal('calibration-popup');" id = "calibrationBTN" font-size: 1vw;>Ron Setup</div>
           <div class="maslow-grid-item maslow-grid-item-btn" style = "background-color: #b69fcb;" onclick="sendMove('X-Y-')"><canvas id = "blBtn" style="width: 100%; height: 100%"></canvas></div>
           <div class="maslow-grid-item maslow-grid-item-btn" style = "background-color: #9d88c0;" onclick="sendMove('Y-')"><canvas id = "dnBtn" style="width: 100%; height: 100%"></div>
           <div class="maslow-grid-item maslow-grid-item-btn" style = "background-color: #b69fcb;" onclick="sendMove('X+Y-')"><canvas id = "brBtn" style="width: 100%; height: 100%"></canvas></div>
@@ -31,7 +31,7 @@
         </div>
         <div class="maslow-grid-container tablettab-controls-item">
           <div class="maslow-grid-item maslow-grid-item-btn" style = "background-color: #4aa85c;" onclick="runGCode();"><canvas id = "playBtn" style="width: 100%; height: 100%"></canvas></div>
-          <div class="maslow-grid-item maslow-grid-item-btn" style = "background-color: #efbb33;" onclick="pauseGCode();"><canvas id = "pauseBtn" style="width: 100%; height: 100%"></canvas></div>  
+          <div class="maslow-grid-item maslow-grid-item-btn" style = "background-color: #efbb33;" onclick="pauseGCode();"><canvas id = "pauseBtn" style="width: 100%; height: 100%"></canvas></div>
           <div class="maslow-grid-item maslow-grid-item-btn" style = "background-color: #cd654c;" onclick="onCalibrationButtonsClick('$ESTOP','E Stop');"><canvas id = "stopBtn" style="width: 100%; height: 100%"></canvas></div>
         </div>
         <select class="tablettab-controls-item" id="filelist" onchange="selectFile()">
@@ -58,13 +58,13 @@
                   0.000
                 </td>
               </tr>
-  
+
               <tr>
                 <td id="active-state"></td>
               </tr>
             </table>
           </div>
-          <div onclick="clearAlarm()"  id = "systemStatus" class="maslow-grid-item system-status">Idle</div>  
+          <div onclick="clearAlarm()"  id = "systemStatus" class="maslow-grid-item system-status">Idle</div>
         </div>
         <textarea style="border:  none" class="messages tablettab-controls-item" id="messages" rows="14" spellcheck="false" readonly>Serial Messages</textarea>
       </div>
@@ -75,15 +75,15 @@
     <div id="z-axis-popup" class="calibration-modal-container" onclick="hideModal('z-axis-popup')">
       <div class="calibration-modal-content" onclick="event.stopPropagation();">
           <div class="calibration-modal-button-container">
-              <div class="buttons-row">   
+              <div class="buttons-row">
                 <div class="calibration-modal-info" id = "disZ"> 1.00</div>
-                <button class="calibration-modal-button" onclick="sendMove('Z+')"> Up</button>                     
+                <button class="calibration-modal-button" onclick="sendMove('Z+')"> Up</button>
               </div>
               <div class="buttons-row">
                 <button class="calibration-modal-button" onclick="zeroAxis('Z')"> Define Home</button>
                 <button class="calibration-modal-button" onclick="sendMove('Z-')"> Down</button>
               </div>
-              
+
             </div>
       </div>
     </div>
@@ -103,15 +103,19 @@
                   <button class="calibration-modal-button" onclick="onCalibrationButtonsClick('$CAL','Calibrate');">Calibrate</button>
                   <button class="calibration-modal-button" onclick="onCalibrationButtonsClick('$TKSLK','Take Slack');">Take Slack</button>
                 </div>
-                
-                
               </div>
               <div class="buttons-row">
                 <!-- <button class="calibration-modal-button" onclick="onCalibrationButtonsClick('$TKSLK','Home Z');">Home Z</button> -->
                 <button class="calibration-modal-button stop-button" onclick="onCalibrationButtonsClick('$STOP','Stop');">Stop</button>
                 <button class="calibration-modal-button" onclick="onCalibrationButtonsClick('$TEST','Test');">Test</button>
               </div>
-              
+            </div>
+            <p class="ind-label">Individual retract (only to test each belt in turn):</p>
+            <div class="buttons-row">
+              <button class="calibration-modal-button" onclick="onCalibrationButtonsClick('$TL','Top Left');">Top Left</button>
+              <button class="calibration-modal-button" onclick="onCalibrationButtonsClick('$TR','Top Right');">Top Right</button>
+              <button class="calibration-modal-button" onclick="onCalibrationButtonsClick('$BL','Bottom Left');">Bottom Left</button>
+              <button class="calibration-modal-button" onclick="onCalibrationButtonsClick('$BR','Bottom Right');">Bottom Right</button>
             </div>
       </div>
     </div>
