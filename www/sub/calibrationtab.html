@@ -1,0 +1,27 @@
+<div id="calibrationtab" class="tabcontent calibrationtab">
+  <div style="display: flex;flex-direction: column;">
+    <div id="calibrationcontainer" style="display: flex; flex-direction: row;">
+      <canvas id="CursorLayer" width="1000" height="600"
+        style="width: 1000px;height: 600px; border: 1px solid;padding: 2px;"></canvas>
+      <div style="width: 100%;height: 600px; overflow: auto;padding-left: 10px;">
+        <table id="caltable" class="caltable"> </table>
+      </div>
+    </div>
+    <div id="caltable-container">
+      <textarea id="caldata" onchange="measurementsChanged()"></textarea>
+    </div>
+    <div id="calcontrols" style="height: 100px;">
+      <button id="compute-sim-button" class="btn btn-primary" onclick="computeSim()" disabled>Compute</button>
+    </div>
+  </div>
+</div>
+<script>
+  const calele = document.getElementById('calibrationtab');
+  calele.addEventListener('activate', () => {
+    computeSim();
+  });
+  calele.addEventListener('deactivate', () => {
+    clearCalCanvas();
+  })
+
+</script>

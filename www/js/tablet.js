@@ -242,7 +242,7 @@ sendMove = function (cmd) {
 }
 
 moveHome = function () {
-   
+
   //We want to move to the opposite of the machine's current X,Y cordinates
   var x = parseFloat(id('mpos-x').innerText)
   var y = parseFloat(id('mpos-y').innerText)
@@ -1116,6 +1116,14 @@ document.addEventListener('click', function (event) {
 
 id('tablettablink').addEventListener('DOMActivate', fullscreenIfMobile, false)
 
+function toggleJog() {
+  let jog = document.getElementById('jogdial-maslow');
+  if (jog.style.display == 'none') {
+    jog.style.display = 'block';
+  } else {
+    jog.style.display = 'none';
+  }
+}
 /* Calibration modal */
 
 function openModal(modalId) {
@@ -1131,6 +1139,13 @@ function hideModal(modalId) {
 
   if (modal) {
     modal.style.display = 'none'
+  }
+}
+
+function maslowSettingsClosed(result) {
+  if (result === 'save') {
+    // do the save here...
+    console.log('would have saved')
   }
 }
 
