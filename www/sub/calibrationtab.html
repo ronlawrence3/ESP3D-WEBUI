@@ -10,7 +10,14 @@
     <div id="caltable-container">
       <textarea id="caldata" onchange="measurementsChanged()"></textarea>
     </div>
-    <div id="calcontrols" style="height: 100px;">
+    <div id="calcontrols" style="height: 100px">
+      <button class="btn btn-info" onclick="onCalibrationButtonsClick('$ALL','Retract All');">Retract All</button>
+      <button class="btn btn-info" onclick="onCalibrationButtonsClick('$EXT','Extend All');">Extend All</button>
+      <button class="btn btn-info" onclick="onCalibrationButtonsClick('$TKSLK','Apply Tension');">Apply Tension</button>
+      <button class="btn btn-primary" onclick="onCalibrationButtonsClick('$CAL','Calibrate');">Calibrate</button>
+      <span class="spacerbtn"></span>
+      <button id="systemStatusCal" class="btn btn-warning" onclick="clearAlarm()">Alarm</button>
+      <span class="spacerbtn"></span>
       <button id="compute-sim-button" class="btn btn-primary" onclick="computeSim()" disabled>Compute</button>
     </div>
   </div>
@@ -18,7 +25,8 @@
 <script>
   const calele = document.getElementById('calibrationtab');
   calele.addEventListener('activate', () => {
-    computeSim();
+    // just do one round...
+    initialGuess = computeLinesFitness(SavedMeasurements, initialGuess);
   });
   calele.addEventListener('deactivate', () => {
     clearCalCanvas();

@@ -56,7 +56,8 @@ function Monitor_output_Update(message) {
                 outlc.startsWith("echo:") ||
                 outlc.startsWith("Config:") ||
                 outlc.startsWith("echo:Unknown command: \"echo\"") ||
-                outlc.startsWith("echo:enqueueing \"*\"")
+                outlc.startsWith("echo:enqueueing \"*\"") ||
+                outlc.startsWith("[MSG:INFO: Heartbeat]")
             ) {
                 continue;
             }

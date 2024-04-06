@@ -437,10 +437,15 @@ function show_grbl_status(stateName, message, hasSD) {
     var clickable = clickableFromStateName(stateName, hasSD)
     setHTML('grbl_status', stateName)
     setHTML('systemStatus', stateName)
+    setHTML('systemStatusCal', stateName)
     if (stateName === 'Alarm') {
       id('systemStatus').classList.add('system-status-alarm')
+      id('systemStatusCal').classList.remove('btn-info');
+      id('systemStatusCal').classList.add('btn-warning');
     } else {
       id('systemStatus').classList.remove('system-status-alarm')
+      id('systemStatusCal').classList.remove('btn-warning');
+      id('systemStatusCal').classList.add('btn-info');
     }
     setClickability('sd_resume_btn', clickable.resume)
     setClickability('sd_pause_btn', clickable.pause)
@@ -634,8 +639,28 @@ function grblHandleMessage(msg) {
       .replace(/(\b(?:bl|br|tr|tl)\b):/g, '"$1":')
       .replace('CLBM:', '')
       .replace(/,]$/, ']')
-    let measurements = JSON.parse(validJsonMSG)
-    handleCalibrationData(measurements)
+    SavedMeasurements = JSON.parse(validJsonMSG);
+    // update the image
+    initialGuess = computeLinesFitness(SavedMeasurements, initialGuess);
+    // compute
+    handleCalibrationData(SavedMeasurements)
+  }
+  if (msg.startsWith('MEASUREMENT:')) {
+    const evalMSG = msg.replace('MEASUREMENT:','');
+    try {
+      const measurement = eval(evalMSG);
+      if (measurement.waypoint !== undefined) {
+        if (!SavedMeasurements) {
+          SavedMeasurements = [];
+        }
+        SavedMeasurements[measurement.waypoint] = measurement;
+        initialGuess = computeLinesFitness(SavedMeasurements, initialGuess);
+      } else {
+        console.error('Bad measurement line');
+      }
+    } catch (error) {
+      console.error(error);
+    }
   }
   if (msg.startsWith('<')) {
     grblProcessStatus(msg)

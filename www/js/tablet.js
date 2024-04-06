@@ -326,8 +326,10 @@ function tabletShowResponse(response) {}
 
 function clearAlarm() {
   if (id('systemStatus').innerText == 'Alarm') {
-    id('systemStatus').classList.remove('system-status-alarm')
-    SendPrinterCommand('$X', true, null, null, 114, 1)
+    id('systemStatus').classList.remove('system-status-alarm');
+    id('systemStatusCal').classList.remove('btn-warning');
+    id('systemStatusCal').classList.add('btn-info');
+    SendPrinterCommand('$X', true, null, null, 114, 1);
   }
 }
 
@@ -1031,7 +1033,7 @@ id('tablettab').addEventListener('activate', askMachineBbox, false)
 // a) required setting a fixed message window height, or
 // b) the message window would extend past the screen bottom when messages were added
 function height(element) {
-  return element.getBoundingClientRect().height
+  return element?.getBoundingClientRect()?.height || 0;
 }
 function heightId(eid) {
   return height(id(eid))
@@ -1150,6 +1152,12 @@ function maslowSettingsClosed(result) {
 }
 
 const onCalibrationButtonsClick = async (command, msg) => {
+  if(command == '$CAL'){
+    // wipe previous saved measurements
+    SavedMeasurements = [];
+    initialGuess = computeLinesFitness(SavedMeasurements, initialGuess);
+  }
+
   sendCommand(command)
 
   //Prints out the index.html version number when test is pressed

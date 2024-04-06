@@ -559,7 +559,7 @@ function measurementsChanged() {
       textValue = JSON.stringify(eval(textValue));
     }
     let caldata = JSON.parse(textValue);
-    measurements = caldata;
+    SavedMeasurements = caldata;
     calibrationTableUpdate();
     document.querySelector('button#compute-sim-button').disabled = false;
   } catch (err) {
@@ -570,7 +570,7 @@ function measurementsChanged() {
 function computeSim() {
 
   clearCalCanvas();
-  findMaxFitness(measurements);
+  findMaxFitness(SavedMeasurements);
   results = document.querySelector("#messages").value
   console.log(results);
 }
@@ -678,11 +678,12 @@ calculateTensions(centerX, centerY, initialGuess)
 // measurements.push(takeSimulatedMeasurement(centerX + 800,centerY,randomMeasurementError, constantMeasurementError));
 // measurements.push(takeSimulatedMeasurement(centerX + 800,centerY - 400,randomMeasurementError, constantMeasurementError));
 
-var measurements = [
-  { bl: 1560.141, br: 2734.873, tr: 2433.119, tl: 883.419 },
-  { bl: 1471.909, br: 2683.675, tr: 2461.234, tl: 956.507 },
-  { bl: 1383.243, br: 2635.983, tr: 2492.822, tl: 1034.411 },
-  { bl: 1295.276, br: 2590.421, tr: 2528.066, tl: 1116.038 },
+/** SavedMeasurements is the "global" measurements used for calibration. */
+var SavedMeasurements = [];
+  // { bl: 1560.141, br: 2734.873, tr: 2433.119, tl: 883.419 },
+  // { bl: 1471.909, br: 2683.675, tr: 2461.234, tl: 956.507 },
+  // { bl: 1383.243, br: 2635.983, tr: 2492.822, tl: 1034.411 },
+  // { bl: 1295.276, br: 2590.421, tr: 2528.066, tl: 1116.038 },
   // {bl:1210.792,   br:2548.830,   tr:2566.603,   tl:1200.482},
   // {bl:1126.427,   br:2510.942,   tr:2608.576,   tl:1287.002},
   // {bl:1046.081,   br:2476.385,   tr:2653.523,   tl:1375.421},
@@ -778,13 +779,13 @@ var measurements = [
   // {bl:2514.450,   br:1019.056,   tr:1375.496,   tl:2656.550},
   // {bl:2484.029,   br:940.403,   tr:1465.790,   tl:2704.186},
   // {bl:2458.091,   br:866.263,   tr:1557.264,   tl:2754.657},
-]
+// ]
 
 //Do projection and scaling
 // measurements = scaleMeasurements(measurements, 0.9945);
-measurements = projectMeasurements(measurements)
+SavedMeasurements = projectMeasurements(SavedMeasurements)
 
-computeLinesFitness(measurements, initialGuess)
+computeLinesFitness(SavedMeasurements, initialGuess)
 
 
 /**
@@ -881,7 +882,7 @@ function calibrationTableUpdate() {
   headr.insertCell(-1).innerText = "Top Right";
   headr.insertCell(-1).innerText = "Bottom Right";
   headr.insertCell(-1).innerText = "Bottom Left";
-  measurements.forEach(
+  SavedMeasurements.forEach(
     m => {
       const row = table.insertRow();
       row.insertCell(-1).innerText = "";

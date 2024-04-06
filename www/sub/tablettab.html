@@ -109,7 +109,6 @@
             </h3>
         </div>
           <div class="calibration-modal-button-container">
-              <button class="calibration-modal-button" onclick="setactiveModal('maslow-settings', maslowSettingsClosed);showModal();">Calibration settings</button>
               <div class="buttons-row">
                 <button class="calibration-modal-button" onclick="onCalibrationButtonsClick('$ALL','Retract All');">Retract All</button>
                 <span class="arrow">&#8594;</span>
@@ -136,41 +135,7 @@
       </div>
     </div>
 
-    <div id="maslow-settings" class="modal topmodal">
-      <div class="modal-content">
-        <div class="modal-header">
-            <span class="close" onclick="closeModal('cancel')"><b>&times;</b></span>
-            <h3>
-                <div class="modal-title">Maslow Settings</div>
-            </h3>
-        </div>
-        <div class="modal-body">
-          <ul class="nav nav-tabs" id="settings-tabs" role="tablist">
-            <li class="nav-item" role="presentation"><button class="nav-link active" id="layout-settings" data-bs-toggle="tab" data-bs-target="#layout-settings-content" type="button" role="tab" >Layout</button></li>
-            <li class="nav-item" role="presentation"><button class="nav-link active" id="movement-settings" data-bs-toggle="tab" data-bs-target="#movement-settings-content" type="button" role="tab" >Movement</button></li>
-          </ul>
-          <div class="tab-content" id="settings-tabcontent">
-            <div class="tab-pane fade show active" id="layout-settings-content" role="tabpanel">
-              <span class="modal-text">This is where the SVG goes, with entries for w, h of frame, calibration area, spoil area </span>
-            </div>
-            <div class="tab-pane fade show active" id="movement-settings-content" role="tabpanel">
-              <span class="modal-text">This is where the buttons for moving things go</span>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-            <span class="pull-right">
-                <button class="btn btn-primary" onclick="closeModal('save');" translate>Save</button>
-            </span>
-            <span class="pull-right">
-                &nbsp;&nbsp;
-            </span>
-            <span class="pull-right">
-                <button class="btn btn-warning" onclick="closeModal('cancel');" translate>Cancel</button>
-            </span>
-        </div>
       </div>
-  </div>
 
 
 
