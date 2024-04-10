@@ -126,12 +126,96 @@
               </div>
               <div class="buttons-row">
                 <!-- <button class="calibration-modal-button" onclick="onCalibrationButtonsClick('$TKSLK','Home Z');">Home Z</button> -->
+                <button class="calibration-modal-button" onclick="loadConfigValues(); openModal('configuration-popup');">Config</button>
                 <button class="calibration-modal-button stop-button" onclick="onCalibrationButtonsClick('$STOP','Stop');">Stop</button>
+              </div>
+              <div class="buttons-row">
                 <button class="calibration-modal-button" onclick="onCalibrationButtonsClick('$TEST','Test');">Test</button>
                 <button class="calibration-modal-button" onclick="onCalibrationButtonsClick('$CMP','Release Tension');">Release Tension</button>
               </div>
 
             </div>
+      </div>
+    </div>
+
+    <div id="configuration-popup" class="calibration-modal-container" onclick="hideModal('configuration-popup')">
+      <div class="calibration-modal-content" onclick="event.stopPropagation();">
+        <div class="calibration-modal-button-container">
+          <div class="input-row">
+            <div style="display: flex; justify-content: center;">
+              <label style="text-align: center;">Configuration</label>
+            </div>
+          </div>
+          <hr style="border-top: 1px dashed;">
+          <div class="grid-container">
+            <div class="input-row">
+              <label for="machineWidth" class="input-label">Machine Width(mm)</label>
+            </div>
+            <div class="input-row">
+              <input id="machineWidth" type="text" class="calibration-modal-input">
+            </div>
+            <div class="input-row">
+              <label for="machineHeight" class="input-label">Machine Height(mm)</label>
+            </div>
+            <div class="input-row">
+              <input id="machineHeight" type="text" class="calibration-modal-input">
+            </div>
+            <div class="input-row">
+              <label for="machineOrientation" class="input-label">Orientation</label>
+            </div>
+            <div class="input-row">
+              <select id="machineOrientation" class="calibration-modal-input">
+                <option value="horizontal">Horizontal</option>
+                <option value="vertical">Vertical</option>
+              </select>
+            </div>
+          </div>
+          <hr style="border-top: 1px dashed;">
+          <div class="input-row">
+            <div style="display: flex; justify-content: center;">
+              <label style="text-align: center;">Calibration Grid</label>
+            </div>
+          </div>
+          <div class="grid-container">
+            <div class="input-row">
+              <label for="gridWidth" class="input-label">Width(mm)</label>
+            </div>
+            <div class="input-row">
+              <input id="gridWidth" type="text" class="calibration-modal-input">
+            </div>
+            <div class="input-row">
+              <label for="gridHeight" class="input-label">Height(mm)</label>
+            </div>
+            <div class="input-row">
+              <input id="gridHeight" type="text" class="calibration-modal-input">
+            </div>
+          </div>
+            <div class="input-row">
+            <div style="display: flex;">
+              <div>
+              <label for="pointsX">Points: </label>
+              <input id="pointsX" type="text" class="calibration-modal-input">
+              </div>
+              <div>
+              <label for="pointsY">by</label>
+              <input id="pointsY" type="text" class="calibration-modal-input">
+              </div>
+            </div>
+            </div>
+          <hr style="border-top: 1px dashed;">
+          <div class="grid-container">
+            <div class="input-row">
+              <label for="retractionForce" class="input-label">Retraction Force</label>
+            </div>
+            <div class="input-row">
+              <input id="retractionForce" type="text" class="calibration-modal-input">
+            </div>
+          </div>
+          <hr style="border-top: 1px dashed;">
+          <div class="input-row">
+            <button type="button" class="calibration-modal-button" onclick="saveConfigValues(); hideModal('configuration-popup')">Save</button>
+          </div>
+        </div>
       </div>
     </div>
 

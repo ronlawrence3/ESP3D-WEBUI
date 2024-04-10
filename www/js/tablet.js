@@ -6,7 +6,7 @@ var sndok = true
 
 var lastHeartBeatTime = new Date().getTime();
 
-var versionNumber = 0.67
+var versionNumber = 0.68
 
 function beep(vol, freq, duration) {
   if (snd == null) {
@@ -272,6 +272,8 @@ function checkOnHeartbeat() {
   }
 }
 
+
+var loadedValues = {};
 function tabletShowMessage(msg, collecting) {
   if (
     collecting ||
@@ -290,6 +292,82 @@ function tabletShowMessage(msg, collecting) {
     return
   }
 
+  //These are used for generating the working area in the background
+  if (msg.startsWith('$/axes/x/max_travel_mm=')) {
+    displayer.setXTravel(parseFloat(msg.substring(23, msg.length)))
+    return;
+  }
+  if (msg.startsWith('$/axes/y/max_travel_mm=')) {
+    displayer.setYTravel(parseFloat(msg.substring(23, msg.length)))
+    return;
+  }
+
+  if (msg.startsWith('$/axes/x/homing/mpos_mm=')) {
+    displayer.setXHome(parseFloat(msg.substring(24, msg.length)))
+    return;
+  }
+  if (msg.startsWith('$/axes/y/homing/mpos_mm=')) {
+    displayer.setYHome(parseFloat(msg.substring(24, msg.length)))
+    return;
+  }
+
+  if (msg.startsWith('$/axes/x/homing/positive_direction=')) {
+    displayer.setXDir(msg.substring(35, msg.length))
+    return;
+  }
+  if (msg.startsWith('$/axes/y/homing/positive_direction=')) {
+    displayer.setYDir(msg.substring(35, msg.length))
+    return;
+  }
+
+  //These are used for populating the configuraiton popup
+  if (msg.startsWith('$/maslow_calibration_grid_width_mm_X=')) {
+    document.getElementById('gridWidth').value = msg.substring(37, msg.length)
+    loadedValues['gridWidth'] = msg.substring(37, msg.length)
+    return;
+  }
+  if (msg.startsWith('$/maslow_calibration_grid_height_mm_Y=')) {
+    document.getElementById('gridHeight').value = msg.substring(38, msg.length)
+    loadedValues['gridHeight'] = msg.substring(38, msg.length)
+    return;
+  }
+  if (msg.startsWith('$/Maslow_calibration_size_X=')) {
+    document.getElementById('pointsX').value = msg.substring(28, msg.length)
+    loadedValues['pointsX'] = msg.substring(28, msg.length)
+    return;
+  }
+  if (msg.startsWith('$/Maslow_calibration_size_Y=')) {
+    document.getElementById('pointsY').value = msg.substring(28, msg.length)
+    loadedValues['pointsY'] = msg.substring(28, msg.length)
+    return;
+  }
+  if (msg.startsWith('$/Maslow_Retract_Current_Threshold=')) {
+    document.getElementById('retractionForce').value = msg.substring(35, msg.length)
+    loadedValues['retractionForce'] = msg.substring(35, msg.length)
+    return;
+  }
+  if (msg == '$/Maslow_vertical=false') {
+    document.getElementById('machineOrientation').value = 'horizontal'
+    loadedValues['machineOrientation'] = 'horizontal'
+    return;
+  }
+  if (msg == '$/Maslow_vertical=true') {
+    document.getElementById('machineOrientation').value = 'vertical'
+    loadedValues['machineOrientation'] = 'vertical'
+    return;
+  }
+  if (msg.startsWith('$/Maslow_trX=')) {
+    document.getElementById('machineWidth').value = msg.substring(13, msg.length)
+    loadedValues['machineWidth'] = msg.substring(13, msg.length)
+    return;
+  }
+  if (msg.startsWith('$/Maslow_trY=')) {
+    document.getElementById('machineHeight').value = msg.substring(13, msg.length)
+    loadedValues['machineHeight'] = msg.substring(13, msg.length)
+    return;
+  }
+
+
   let msgWindow = document.getElementById('messages')
   let text = msgWindow.textContent
   text = text + '\n' + msg
@@ -300,26 +378,7 @@ function tabletShowMessage(msg, collecting) {
     msg = '<span style="color:red;">' + msg + '</span>'
   }
 
-  if (msg.startsWith('$/axes/x/max_travel_mm=')) {
-    displayer.setXTravel(parseFloat(msg.substring(23, msg.length)))
-  }
-  if (msg.startsWith('$/axes/y/max_travel_mm=')) {
-    displayer.setYTravel(parseFloat(msg.substring(23, msg.length)))
-  }
 
-  if (msg.startsWith('$/axes/x/homing/mpos_mm=')) {
-    displayer.setXHome(parseFloat(msg.substring(24, msg.length)))
-  }
-  if (msg.startsWith('$/axes/y/homing/mpos_mm=')) {
-    displayer.setYHome(parseFloat(msg.substring(24, msg.length)))
-  }
-
-  if (msg.startsWith('$/axes/x/homing/positive_direction=')) {
-    displayer.setXDir(msg.substring(35, msg.length))
-  }
-  if (msg.startsWith('$/axes/y/homing/positive_direction=')) {
-    displayer.setYDir(msg.substring(35, msg.length))
-  }
 }
 
 function tabletShowResponse(response) {}
@@ -1149,6 +1208,63 @@ function maslowSettingsClosed(result) {
     // do the save here...
     console.log('would have saved')
   }
+}
+
+//Used to populate the config popup when it loads
+function loadConfigValues(){
+  SendPrinterCommand('$/Maslow_vertical')
+  SendPrinterCommand('$/maslow_calibration_grid_width_mm_X')
+  SendPrinterCommand('$/maslow_calibration_grid_height_mm_Y')
+  SendPrinterCommand('$/Maslow_calibration_size_X');
+  SendPrinterCommand('$/Maslow_calibration_size_Y');
+  SendPrinterCommand('$/Maslow_Retract_Current_Threshold');
+  SendPrinterCommand('$/Maslow_trX');
+  SendPrinterCommand('$/Maslow_trY');
+}
+
+//Save the configuration values
+function saveConfigValues(){
+  let gridWidth = document.getElementById('gridWidth').value
+  let gridHeight = document.getElementById('gridHeight').value
+  let pointsX = document.getElementById('pointsX').value
+  let pointsY = document.getElementById('pointsY').value
+  let retractionForce = document.getElementById('retractionForce').value
+  let machineOrientation = document.getElementById('machineOrientation').value
+  let machineWidth = document.getElementById('machineWidth').value
+  let machineHeight = document.getElementById('machineHeight').value
+
+  if(gridWidth != loadedValues['gridWidth']){
+    sendCommand('$/maslow_calibration_grid_width_mm_X=' + gridWidth)
+  }
+  if(gridHeight != loadedValues['gridHeight']){
+    sendCommand('$/maslow_calibration_grid_height_mm_Y=' + gridHeight)
+  }
+  if(pointsX != loadedValues['pointsX']){
+    sendCommand('$/Maslow_calibration_size_X=' + pointsX)
+  }
+  if(pointsY != loadedValues['pointsY']){
+    sendCommand('$/Maslow_calibration_size_Y=' + pointsY)
+  }
+  if(retractionForce != loadedValues['retractionForce']){
+    sendCommand('$/Maslow_Retract_Current_Threshold=' + retractionForce)
+  }
+  if(machineOrientation != loadedValues['machineOrientation']){
+    if(machineOrientation == 'horizontal'){
+      sendCommand('$/Maslow_vertical=false')
+    } else {
+      sendCommand('$/Maslow_vertical=true')
+    }
+  }
+  if(machineWidth != loadedValues['machineWidth'] || machineHeight != loadedValues['machineHeight']){
+    sendCommand('$/Maslow_tlX=0')
+    sendCommand('$/Maslow_tlY=' + machineHeight)
+    sendCommand('$/Maslow_trX=' + machineWidth)
+    sendCommand('$/Maslow_trY=' + machineHeight)
+    sendCommand('$/Maslow_brX=' + machineWidth)
+  }
+
+  refreshSettings(current_setting_filter);
+  saveMaslowYaml();
 }
 
 const onCalibrationButtonsClick = async (command, msg) => {

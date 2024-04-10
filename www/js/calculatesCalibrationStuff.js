@@ -565,6 +565,7 @@ function findMaxFitness(measurements) {
       }
 
       messagesBox.value += '\nCalibration complete \nCalibration values:';
+      messagesBox.value += '\nFitness: ' + 1/bestGuess.fitness.toFixed(7);
       messagesBox.value += '\nMaslow_tlX: ' + bestGuess.tl.x.toFixed(1);
       messagesBox.value += '\nMaslow_tlY: ' + bestGuess.tl.y.toFixed(1);
       messagesBox.value += '\nMaslow_trX: ' + bestGuess.tr.x.toFixed(1);
@@ -589,6 +590,16 @@ function findMaxFitness(measurements) {
         saveMaslowYaml();
         window.computing = false;
 
+
+        messagesBox.value += '\nThese values have been automatically saved for you.';
+        messagesBox.value += "\nYou MUST restart your machine for them to take effect...I know that is annoying, it's getting fixed ASAP. ";
+        messagesBox.scrollTop
+        messagesBox.scrollTop = messagesBox.scrollHeight;
+
+        //This restarts the esp32 to prevent you from trying to move the machine after calibration
+        setTimeout(function() {
+          sendCommand('$System/Control=RESTART');
+        }, 2000);
       }
 
 
