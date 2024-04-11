@@ -1,0 +1,5 @@
+# python requirements
+flask
+websocket
+zeroconf
+
