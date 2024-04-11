@@ -499,12 +499,16 @@ function measurementsChanged() {
       textValue = JSON.stringify(eval(textValue));
     }
     let caldata = JSON.parse(textValue);
-    SavedMeasurements = caldata;
-    calibrationTableUpdate();
-    document.querySelector('button#compute-sim-button').disabled = false;
+    updateCalibrationSave(caldata);
   } catch (err) {
     console.error(err);
   }
+}
+
+function updateCalibrationSave(caldata) {
+    SavedMeasurements = caldata;
+    calibrationTableUpdate();
+    document.querySelector('button#compute-sim-button').disabled = false;
 }
 
 function computeSim() {
@@ -529,6 +533,9 @@ function findMaxFitness(measurements) {
     return;
   }
   window.computing = true;
+  document.querySelector('button#compute-sim-button').disabled = true;
+
+
   let currentGuess = JSON.parse(JSON.stringify(initialGuess));
   let stagnantCounter = 0;
   let totalCounter = 0;
@@ -537,8 +544,6 @@ function findMaxFitness(measurements) {
   var messagesBox = document.querySelector('#messages');
 
   function loop() {
-    //Clear the canvass
-    clearCanvas();
 
     currentGuess = computeLinesFitness(measurements, currentGuess);
 
@@ -557,6 +562,7 @@ function findMaxFitness(measurements) {
     }
 
     if (stagnantCounter < 100 && totalCounter < 200000) {
+      clearCanvas();
       requestAnimationFrame(loop);
     } else {
 
@@ -600,8 +606,12 @@ function findMaxFitness(measurements) {
         setTimeout(function() {
           sendCommand('$System/Control=RESTART');
         }, 2000);
+
       }
 
+      // allow button to be pressed again
+      window.computing = false;
+      document.querySelector('button#compute-sim-button').disabled = false;
 
     }
   }

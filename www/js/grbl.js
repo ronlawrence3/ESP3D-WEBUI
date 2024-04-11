@@ -622,6 +622,7 @@ async function handleCalibrationData(measurements) {
   sendCommand("$ACKCAL");
   await sleep(500)
   try {
+    updateCalibrationSave(measurements);
     calibrationResults = await findMaxFitness(measurements)
   } catch (error) {
     console.error('An error occurred:', error)
