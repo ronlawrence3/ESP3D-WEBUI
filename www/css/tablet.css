@@ -780,6 +780,12 @@ textarea {
   flex-direction: column;
 }
 
+.spacerbtn {
+  width: 100px;
+  display: inline-block;
+}
+
+
 .system-status {
   background-color: #4aa85c;
   color: white;
@@ -901,10 +907,4 @@ textarea {
 .input-label {
   text-align: left;
   float: left;
-}
-
-
-.spacerbtn {
-  width: 100px;
-  display: inline-block;
 }
