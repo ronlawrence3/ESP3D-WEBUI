@@ -641,8 +641,6 @@ function grblHandleMessage(msg) {
       .replace('CLBM:', '')
       .replace(/,]$/, ']')
     SavedMeasurements = JSON.parse(validJsonMSG);
-    // update the image
-    initialGuess = computeLinesFitness(SavedMeasurements, initialGuess);
     // compute
     handleCalibrationData(SavedMeasurements)
   }
@@ -655,6 +653,7 @@ function grblHandleMessage(msg) {
           SavedMeasurements = [];
         }
         SavedMeasurements[measurement.waypoint] = measurement;
+        // draw these as is... (when CLBM comes in we will do full fitness computation)
         initialGuess = computeLinesFitness(SavedMeasurements, initialGuess);
       } else {
         console.error('Bad measurement line');

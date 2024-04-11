@@ -492,13 +492,14 @@ function scaleMeasurementsBasedOnTension(measurements, guess) {
 }
 
 function findMaxFitness(measurements) {
+  // reject if already running
   if (window.computing) {
-    console.log('Computation in progress, ignoring');
+    console.log('Computation in progress, ignoring request');
     return;
   }
+  // turn off compute button
   window.computing = true;
   document.querySelector('button#compute-sim-button').disabled = true;
-
 
   let currentGuess = JSON.parse(JSON.stringify(initialGuess));
   let stagnantCounter = 0;
@@ -557,8 +558,6 @@ function findMaxFitness(measurements) {
         sendCommand('$/Maslow_brY=' + bestGuess.br.y.toFixed(1));
         refreshSettings(current_setting_filter);
         saveMaslowYaml();
-        window.computing = false;
-
 
         messagesBox.value += '\nThese values have been automatically saved for you.';
         messagesBox.value += "\nYou MUST restart your machine for them to take effect...I know that is annoying, it's getting fixed ASAP. ";
@@ -569,13 +568,11 @@ function findMaxFitness(measurements) {
         setTimeout(function() {
           sendCommand('$System/Control=RESTART');
         }, 2000);
-
       }
 
-      // allow button to be pressed again
+      // allow compute button to be pressed again
       window.computing = false;
       document.querySelector('button#compute-sim-button').disabled = false;
-
     }
   }
 

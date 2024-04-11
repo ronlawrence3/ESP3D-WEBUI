@@ -1176,15 +1176,6 @@ document.addEventListener('click', function (event) {
 })
 
 id('tablettablink').addEventListener('DOMActivate', fullscreenIfMobile, false)
-
-function toggleJog() {
-  let jog = document.getElementById('jogdial-maslow');
-  if (jog.style.display == 'none') {
-    jog.style.display = 'block';
-  } else {
-    jog.style.display = 'none';
-  }
-}
 /* Calibration modal */
 
 function openModal(modalId) {
@@ -1200,13 +1191,6 @@ function hideModal(modalId) {
 
   if (modal) {
     modal.style.display = 'none'
-  }
-}
-
-function maslowSettingsClosed(result) {
-  if (result === 'save') {
-    // do the save here...
-    console.log('would have saved')
   }
 }
 
@@ -1287,3 +1271,19 @@ const onCalibrationButtonsClick = async (command, msg) => {
 }
 
 /* Calibration modal END */
+
+function toggleJog() {
+  let jog = document.getElementById('jogdial-maslow');
+  if (jog.style.display == 'none') {
+    jog.style.display = 'block';
+  } else {
+    jog.style.display = 'none';
+  }
+}
+
+function maslowSettingsClosed(result) {
+  if (result === 'save') {
+    // do the save here...
+    console.log('would have saved')
+  }
+}
