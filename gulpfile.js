@@ -336,7 +336,7 @@ function compress() {
   return gulp
     .src('dist/index.html')
     .pipe(gzip({ gzipOptions: { level: 9 } }))
-    .pipe(gulp.dest('.'))
+    .pipe(gulp.dest('dist/.'))
     .pipe(size())
 }
 
