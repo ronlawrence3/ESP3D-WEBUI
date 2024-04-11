@@ -5,7 +5,8 @@
 function measurementsChanged() {
   try {
     const calTextElement = document.getElementById("caldata");
-    let textValue = calTextElement.value;
+    let textValue = `${calTextElement.value}`;
+    textValue = textValue.replace('CLBM:','');
     if (textValue.indexOf('bl:')>0) {
       textValue = JSON.stringify(eval(textValue));
     }

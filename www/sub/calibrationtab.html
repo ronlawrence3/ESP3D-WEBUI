@@ -1,4 +1,5 @@
 <div id="calibrationtab" class="tabcontent calibrationtab">
+  <p>EXPERIMENTAL! To use this tab to plot calibration data, copy and paste the line that starts with CLBM: in the serial messages and paste it into the text area above the buttons below.</p>
   <div style="display: flex;flex-direction: column;">
     <div id="calibrationcontainer" style="display: flex; flex-direction: row;">
       <canvas id="CursorLayer" width="1000" height="600"
@@ -11,14 +12,15 @@
       <textarea id="caldata" onchange="measurementsChanged()"></textarea>
     </div>
     <div id="calcontrols" style="height: 100px">
-      <button class="btn btn-info" onclick="onCalibrationButtonsClick('$ALL','Retract All');">Retract All</button>
+      <!-- <button class="btn btn-info" onclick="onCalibrationButtonsClick('$ALL','Retract All');">Retract All</button>
       <button class="btn btn-info" onclick="onCalibrationButtonsClick('$EXT','Extend All');">Extend All</button>
       <button class="btn btn-info" onclick="onCalibrationButtonsClick('$TKSLK','Apply Tension');">Apply Tension</button>
       <button class="btn btn-primary" onclick="onCalibrationButtonsClick('$CAL','Calibrate');">Calibrate</button>
       <span class="spacerbtn"></span>
-      <button id="systemStatusCal" class="btn btn-warning" onclick="clearAlarm()">Alarm</button>
+      <button id="systemStatusCal" class="btn btn-warning" onclick="clearAlarm()">Alarm</button> -->
       <span class="spacerbtn"></span>
       <button id="compute-sim-button" class="btn btn-primary" onclick="computeSim()" disabled>Compute</button>
+      <span id="fitnessMessage" class="calfitnesstext">Fitness: </span>
     </div>
   </div>
 </div>

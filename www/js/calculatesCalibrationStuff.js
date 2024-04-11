@@ -507,6 +507,7 @@ function findMaxFitness(measurements) {
   var bestGuess = JSON.parse(JSON.stringify(initialGuess));
 
   var messagesBox = document.querySelector('#messages');
+  const fitnessMessage = document.getElementById('fitnessMessage');
 
   function loop() {
     clearCalCanvas();
@@ -521,8 +522,10 @@ function findMaxFitness(measurements) {
     totalCounter++;
 
     if(totalCounter % 100 == 0) {
-      messagesBox.value += '\nFitness: ' + 1/bestGuess.fitness.toFixed(7) + ' in ' + totalCounter;
-      messagesBox.scrollTop
+      const fitnessStatus = `Fitness: ${1 / bestGuess.fitness.toFixed(7)} in ${totalCounter}`;
+      fitnessMessage.innerText = fitnessStatus;
+      messagesBox.value += '\n' + fitnessStatus;
+      messagesBox.scrollTop;
       messagesBox.scrollTop = messagesBox.scrollHeight;
     }
 
