@@ -82,6 +82,10 @@ def resolve_mdns(hostname):
 fluidnc_ip = ''
 def set_fluidnc_ip():
     global fluidnc_ip
+    if 'FLUID_IP' in os.environ:
+        fluidnc_ip = os.environ['FLUID_IP']
+        print(            "Proxying to FluidNC at", fluidnc_ip)
+        return
     if len(sys.argv) == 2:
         fluidnc_ip = sys.argv[1]
         print(            "Proxying to FluidNC at", fluidnc_ip)
