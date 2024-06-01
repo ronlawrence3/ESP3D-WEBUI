@@ -305,9 +305,8 @@ function tabletShowMessage(msg, collecting) {
   if (msg.startsWith('MINFO: ')) {
     maslowStatus = JSON.parse(msg.substring(7));
     if (!maslowStatus.homed) {
-      if (!calibrationWizardShowing) {
-        showCalibrationWizard();
-      }
+      setHTML('calmessage', 'Maslow is not homed!');
+      id('calwiztablink').click();
     }
     return;
   }
@@ -1369,52 +1368,3 @@ const onCalibrationButtonsClick = async (command, msg) => {
 }
 
 /* Calibration modal END */
-/* wizard */
-var currentStep = 0;
-var steps = document.getElementsByClassName("calibration-wizard-step");
-var calibrationWizardShowing = false;
-
-function showCalibrationWizard(message) {
-  setHTML('calmessage', message ? message : '')
-  calibrationWizardShowing = true;
-  openModal('calibration-wizard-modal');
-  if (maslowStatus.homed) {
-    currentStep = 3
-  } else {
-    currentStep = -1;
-  }
-  calibrationNextStep(currentStep);
-}
-
-function hideCalibrationWizard() {
-  calibrationWizardShowing = false;
-  hideModal('calibration-wizard-modal');
-  if (!maslowStatus.homed) {
-    window.location.reload();
-    // TODO: another notification here? restart system?
-    // showCalibrationWizard('Maslow is still not homed. You may need to reload the browser');
-  }
-}
-
-function calibrationShowStep(stepIndex) {
-    for (var i = 0; i < steps.length; i++) {
-        steps[i].style.display = "none";
-    }
-    steps[stepIndex].style.display = "block";
-}
-
-function calibrationPreviousStep() {
-    if (currentStep > 0) {
-        currentStep--;
-        calibrationShowStep(currentStep);
-    }
-}
-
-function calibrationNextStep() {
-    if (currentStep < steps.length - 1) {
-        currentStep++;
-        calibrationShowStep(currentStep);
-    } else {
-      hideCalibrationWizard();
-    }
-}

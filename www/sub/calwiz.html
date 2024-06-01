@@ -1,0 +1,102 @@
+<!-- The "re-home dance!" -->
+<div id="calwiztab" class="tabcontent calwiztab">
+    <div id="calwiz-container">
+        <div id="calibrationWizardPage" class="calibration-modal-content">
+            <h2 id="calmessage"></h2>
+            <div class="calibration-wizard-step">
+                <h1>Remove Maslow from Frame</h1>
+                <p>Please remove your maslow from the frame. If you need to release tension or set the Z height, use the
+                    buttons below.</p>
+                <p>Before you continue to the next step, if this is your first time on this frame or you are performing
+                    another calibration on it, remove any bit from the router, then make sure to lower your Z axis all
+                    the
+                    way to the bottom until both sides are clicking using the buttons below.</p>
+                <div class="buttons-row">
+                    <!-- <button class="calibration-modal-button" >&nbsp;</button> -->
+                </div>
+            </div>
+            <div class="calibration-wizard-step">
+                <h1>Retract All Belts</h1>
+                <p>When ready, please click Retract all to retract all belts. If a belt does not retract all the way,
+                    Click
+                    "add tension", then retract all again until they do.</p>
+                <div class="buttons-row">
+                    <button class="calibration-modal-button"
+                        onclick="onCalibrationButtonsClick('$ALL','Retract All');">Retract All</button>
+                </div>
+            </div>
+            <div class="calibration-wizard-step">
+                <h1>Extend All Belts</h1>
+                <p>When ready, please click Extend all to extend all the belts. They will need to be pulled on to get
+                    them
+                    to start extending. Continue pulling each belt until it no longer allows you to pull. At the end of
+                    all
+                    4 belts, the fan should stop. Please see the user manual if you are not able to do this.</p>
+                <div class="buttons-row">
+                    <button class="calibration-modal-button"
+                        onclick="onCalibrationButtonsClick('$EXT','Extend All');">Extend All</button>
+                </div>
+            </div>
+            <div class="calibration-wizard-step">
+                <h1>Attach Maslow To The Frame</h1>
+                <p>Please attach all 4 belts of your maslow to the frame. There should be slack enough to do this and
+                    the
+                    maslow should be roughly in the center of the frame with some slack on the bottom belts. If this is
+                    not the case,
+                    please enter values in the configuration using the config button and start over.</p>
+                <div class="buttons-row">
+                    <!-- <button class="calibration-modal-button" >&nbsp;</button> -->
+                </div>
+            </div>
+            <div class="calibration-wizard-step">
+                <h1>Apply Tension to Belts</h1>
+                <p>When ready, click Apply Tension to make the belts tight.</p>
+                <div class="buttons-row">
+                    <button class="calibration-modal-button"
+                        onclick="onCalibrationButtonsClick('$TKSLK','Apply Tension');">Apply<br />Tension</button>
+                </div>
+            </div>
+
+            <div class="calibration-wizard-step">
+                <h1>Calibrate</h1>
+                <p>If this is a new frame you will need to calibrate. If you have not yet got good fitness you will need
+                    to
+                    calibrate. If you are happy with your calibration then you can skip this step</p>
+                <p>If you need to recalibrate you can select Calibrate.</p>
+
+                <div class="buttons-row">
+                    <button class="calibration-modal-button"
+                        onclick="onCalibrationButtonsClick('$CAL','Calibrate');">Calibrate</button>
+                </div>
+            </div>
+
+            <div class="wizard-bottom">
+
+                <div id="wizardAlwaysOnButtons" class="buttons-row"> </div>
+
+                <div id="wizardAlwaysOnButtons" class="buttons-row">
+                    <button class="calibration-modal-button"
+                        onclick="onCalibrationButtonsClick('$CMP','Release Tension');">Release<br /> Tension</button>
+                    <div class="maslow-grid-item-btn system-status wiz-btn" id="calStatus" onclick="clearAlarm()">Idle
+                    </div>
+                    <button class="calibration-modal-button"
+                        onclick="onCalibrationButtonsClick('$TKSLK','Apply Tension');">Apply<br />Tension</button>
+                </div>
+
+                <div id="wizardAlwaysOnButtons" class="buttons-row">
+                    <button class="calibration-modal-button"
+                        onclick="setTimeout(()=> openModal('z-axis-popup', 10000));">Jog Z axis</button>
+                    <button class="calibration-modal-button" onclick="">&nbsp;</button>
+                    <button class="calibration-modal-button"
+                        onclick="loadConfigValues(); openModal('configuration-popup', 10000);">Config</button>
+                </div>
+
+                <div id="wizardButtons" class="buttons-row">
+                    <button class="btn-primary btn wiz-btn" onclick="calibrationPreviousStep()">Back</button>
+                    <button class="btn-primary btn wiz-btn" onclick="calibrationNextStep()">Next</button>
+                    <button class="btn-warning btn wiz-btn" onclick="hideCalibrationWizard()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
