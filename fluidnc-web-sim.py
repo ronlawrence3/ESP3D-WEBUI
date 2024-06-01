@@ -116,8 +116,8 @@ def fluidnc_websocket():
 python_path = sys.executable
 script_path = os.path.realpath(__file__)
 domain = 'localhost'
-http_port = '8080'
-ws_port = '8081'
+http_port = os.environ['PORT'] or '8080'
+ws_port = os.environ['WSPORT'] or '8081'
 
 ### Flask Stuff
 app = Flask(__name__)
