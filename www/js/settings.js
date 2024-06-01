@@ -231,8 +231,14 @@ function build_control_from_pos(pos, extra) {
   return build_control_from_index(get_index_from_eeprom_pos(pos), extra)
 }
 
+/** Send a command to call Config/Overwrite.
+ * 
+ * If the configuration is invalid, e.g. because the ESP32 performed a panic reset,
+ * Then the error code 153 will be returned via the socket.
+ * @see tablet.js tabletShowMessage()
+ */
 function saveMaslowYaml() {
-  SendGetHttp('/command?plain=' + encodeURIComponent("$CD=/maslow.yaml"));
+  SendGetHttp('/command?plain=' + encodeURIComponent("$CO"));
 }
 
 function build_HTML_setting_list(filter) {

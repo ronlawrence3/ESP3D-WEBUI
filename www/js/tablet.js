@@ -6,7 +6,7 @@ var sndok = true
 
 var lastHeartBeatTime = new Date().getTime();
 
-var versionNumber = 0.74
+var versionNumber = 0.75
 
 function beep(vol, freq, duration) {
   if (snd == null) {
@@ -162,6 +162,22 @@ function long_jog(target) {
   sendCommand(cmd)
 }
 
+checkHomed = function () {
+
+  if(!maslowStatus.homed){
+    alert("Maslow does not know belt lengths. Please retract and extend before continuing.")
+
+    // Write to the console too in case the system alerts are not visible
+    let msgWindow = document.getElementById('messages')
+    let text = msgWindow.textContent
+    text = text + '\n' + "Maslow does not know belt lengths. Please retract and extend before continuing."
+    msgWindow.textContent = text
+    msgWindow.scrollTop = msgWindow.scrollHeight
+
+  }
+  return maslowStatus.homed
+}
+
 sendMove = function (cmd) {
   tabletClick()
   var jog = function (params) {
@@ -206,28 +222,44 @@ sendMove = function (cmd) {
       move({ Z: 0 })
     },
     'X-Y+': function () {
-      jog({ X: -distance, Y: distance })
+      if(checkHomed()){
+        jog({ X: -distance, Y: distance })
+      }
     },
     'X+Y+': function () {
-      jog({ X: distance, Y: distance })
+      if(checkHomed()){
+        jog({ X: distance, Y: distance })
+      }
     },
     'X-Y-': function () {
-      jog({ X: -distance, Y: -distance })
+      if(checkHomed()){
+        jog({ X: -distance, Y: -distance })
+      }
     },
     'X+Y-': function () {
-      jog({ X: distance, Y: -distance })
+      if(checkHomed()){
+        jog({ X: distance, Y: -distance })
+      }
     },
     'X-': function () {
-      jog({ X: -distance })
+      if(checkHomed()){
+        jog({ X: -distance })
+      }
     },
     'X+': function () {
-      jog({ X: distance })
+      if(checkHomed()){
+        jog({ X: distance })
+      }
     },
     'Y-': function () {
-      jog({ Y: -distance })
+      if(checkHomed()){
+        jog({ Y: -distance })
+      }
     },
     'Y+': function () {
-      jog({ Y: distance })
+      if(checkHomed()){
+        jog({ Y: distance })
+      }
     },
     'Z-': function () {
       jog({ Z: -distance })
@@ -245,6 +277,10 @@ sendMove = function (cmd) {
 }
 
 moveHome = function () {
+
+  if(!checkHomed()){
+    return;
+  }
 
   //We want to move to the opposite of the machine's current X,Y cordinates
   var x = parseFloat(id('mpos-x').innerText)
@@ -423,23 +459,18 @@ function tabletShowMessage(msg, collecting) {
     return;
   }
   if (msg.startsWith('error:')) {
-    let parts = msg.split(":");
-    let number = parseInt(parts[1], 10);
+    const msgExtra = {
+      "8": " - Command requires idle state. Unlock machine?",
+      "152": " - Configuration is invalid. Maslow.yaml file may be corrupt. Try restarting",
+      "153": " - Configuration is invalid. ESP32 probably did a panic reset. Config changes cannot be saved. Try restarting",
+    };
 
-    switch (number) {
-      case 8:
-        msg = msg + " - " + "Command requires idle state. Unlock machine?";
-        break;
-      case 152:
-        msg = msg + " - " + "Configuration is invalid. Maslow.yaml file may be corrupt. Try restarting";
-    }
+    msg += msgExtra[msg.split(":")[1]] || "";
   }
-
-
 
   let msgWindow = document.getElementById('messages')
   let text = msgWindow.textContent
-  text = text + '\n' + msg
+  text += '\n' + msg
   msgWindow.textContent = text
   msgWindow.scrollTop = msgWindow.scrollHeight
 

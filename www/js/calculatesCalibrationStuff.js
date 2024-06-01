@@ -580,7 +580,7 @@ function findMaxFitness(measurements) {
               refreshSettings(current_setting_filter);
               saveMaslowYaml();
 
-              messagesBox.textContent += '\nThese values have been automatically saved for you.';
+              messagesBox.textContent += '\nA command to save these values has been successfully sent for you. Please check for any error messages.';
               messagesBox.scrollTop
               messagesBox.scrollTop = messagesBox.scrollHeight;
 
