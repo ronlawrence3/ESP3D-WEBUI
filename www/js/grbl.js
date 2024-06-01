@@ -432,6 +432,19 @@ function show_grbl_position(wpos, mpos) {
   }
 }
 
+function setSystemStatus(stateName) {
+  setHTML('grbl_status', stateName);
+  setHTML('systemStatus', stateName);
+  setHTML('calStatus', stateName);
+  if (stateName === 'Alarm') {
+    id('systemStatus').classList.add('system-status-alarm')
+    id('calStatus').classList.add('system-status-alarm')
+  } else {
+    id('systemStatus').classList.remove('system-status-alarm')
+    id('calStatus').classList.remove('system-status-alarm')
+  }
+}
+
 function show_grbl_status(stateName, message, hasSD) {
   if (stateName) {
     var clickable = clickableFromStateName(stateName, hasSD)

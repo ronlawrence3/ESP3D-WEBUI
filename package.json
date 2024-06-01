@@ -1,6 +1,12 @@
 {
   "name": "ESP3D-WebUI",
   "description": "Web UI for ESP3D",
+  "scripts": {
+    "build": "gulp package",
+    "build:en": "gulp package -en",
+    "serve": "python fluidnc-web-sim.py maslow.local",
+    "start": "npm run build:en && npm run serve"
+  },
   "devDependencies": {
     "del": "6.0.0",
     "deprecated": "latest",

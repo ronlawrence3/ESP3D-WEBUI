@@ -93,7 +93,7 @@ html {
 
 #filelist {
   width: 100%;
-  
+
 }
 
 #small-toolpath {
@@ -324,7 +324,7 @@ html {
   border-radius: 4px;
   -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
           box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
-          
+
 }
 .dropdown-menu.pull-right {
   right: 0;
@@ -787,6 +787,13 @@ textarea {
   line-height: 1.1;
 }
 
+.wiz-btn {
+    height: 75px !important;
+    padding: 15px !important;
+    min-width: 150px;
+    margin: 10px;
+}
+
 .calibration-modal-button {
   padding: 15px;
   background-color: #b69fcb;
@@ -794,14 +801,23 @@ textarea {
   cursor: pointer;
   border: none;
   min-width: 150px;
-  height: 75px; 
+  height: 75px;
   color: #fff;
   text-transform: uppercase;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
+.big-popup {
+    position: absolute;
+    top: 50px !important;
+    width: 100vw;
+    height: calc(100vh - 50px);
+}
 
-
-
+.wizard-bottom {
+  position: relative;
+  bottom:0px;
+  height: 500px;
+}
 
 .calibration-modal-button:hover, .maslow-grid-item-btn:hover {
   filter: brightness(80%);
@@ -851,7 +867,7 @@ textarea {
   font-size: 16px;
   border: none;
   min-width: 150px;
-  height: 75px; 
+  height: 75px;
   color: #000;
   text-transform: uppercase;
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -880,4 +896,8 @@ textarea {
 
 .calibration-modal-input {
   width: 100%;
+}
+
+.calibration-wizard-step {
+  display: none;
 }
