@@ -77,7 +77,7 @@
                 <div id="wizardAlwaysOnButtons" class="buttons-row">
                     <button class="calibration-modal-button"
                         onclick="onCalibrationButtonsClick('$CMP','Release Tension');">Release<br /> Tension</button>
-                    <div class="maslow-grid-item-btn system-status wiz-btn" id="calStatus" onclick="clearAlarm()">Idle
+                    <div class="maslow-grid-item-btn system-status wiz-btn" id="calStatus" onclick="clearAlarm();setCalStatus(5000);">Idle
                     </div>
                     <button class="calibration-modal-button"
                         onclick="onCalibrationButtonsClick('$TKSLK','Apply Tension');">Apply<br />Tension</button>
