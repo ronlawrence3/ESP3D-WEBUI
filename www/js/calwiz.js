@@ -1,7 +1,6 @@
 /* wizard */
 var currentStep = 0;
 var steps = document.getElementsByClassName('calibration-wizard-step');
-var calibrationWizardShowing = false;
 
 id('calwiztab').addEventListener('activate', showCalibrationWizard, false);
 
@@ -10,7 +9,6 @@ function showCalibrationWizard(message) {
     setHTML('calmessage', message ? message : '');
   }
   setCalStatus();
-  calibrationWizardShowing = true;
   if (maslowStatus.homed) {
     currentStep = 3;
   } else {
@@ -20,6 +18,7 @@ function showCalibrationWizard(message) {
 }
 
 function setCalStatus(timeout=0) {
+  clearAlarm();
   setTimeout(() => {
     const st = id('systemStatus').innerText;
     setHTML('calStatus', st);
@@ -32,13 +31,15 @@ function setCalStatus(timeout=0) {
 }
 
 function hideCalibrationWizard() {
-  calibrationWizardShowing = false;
-  hideModal('calibration-wizard-modal');
-  if (!maslowStatus.homed) {
-    window.location.reload();
-    // TODO: another notification here? restart system?
-    // showCalibrationWizard('Maslow is still not homed. You may need to reload the browser');
-  }
+  sendCommand("$MINFO");
+  setTimeout(()=> {
+    if (!maslowStatus.homed) {
+      window.location.reload(); // will end up back here...
+    } else {
+      id('tablettab').click();
+    }
+  }, 2000);
+
 }
 
 function calibrationShowStep(stepIndex) {

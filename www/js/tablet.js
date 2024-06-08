@@ -444,7 +444,6 @@ function tabletShowMessage(msg, collecting) {
     msg = '<span style="color:red;">' + msg + '</span>'
   }
 
-
 }
 
 function tabletShowResponse(response) {}
@@ -1359,9 +1358,6 @@ const onCalibrationButtonsClick = async (command, msg) => {
     msgWindow.scrollTop = msgWindow.scrollHeight
   }
 
-  if (command != '$MINFO') {
-    setTimeout(() => {sendCommand('$MINFO');}, 1000)
-  }
 }
 
 /* Calibration modal END */

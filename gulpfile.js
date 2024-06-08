@@ -99,7 +99,7 @@ function replaceVersion() {
         var buildNumber = execSync('git rev-parse --short HEAD')
           .toString()
           .replace(/\r?\n|\r/g, '')
-        return 'github.com/MitchBradley/ESP3D-WEBUI@' + buildNumber
+        return 'github.com/BarbourSmith/ESP3D-WEBUI@' + buildNumber
       })
     )
     .pipe(gulp.dest('dist'))
