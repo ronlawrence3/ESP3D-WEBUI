@@ -286,7 +286,7 @@ function saveSerialMessages() {
 }
 
 // from MINFO command
-var maslowStatus = { homed: false, extended: false};
+var maslowStatus = { homed: false, extended: false, calibrationInProgress: false, tl: 0, tr: 0, br: 0, bl:0};
 
 var loadedValues = {};
 function tabletShowMessage(msg, collecting) {

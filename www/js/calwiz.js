@@ -10,7 +10,20 @@ function showCalibrationWizard(message) {
   }
   setCalStatus();
   if (maslowStatus.homed) {
-    currentStep = 3;
+    if (
+        maslowStatus.tr === 0 ||
+        maslowStatus.tl === 0 ||
+        maslowStatus.br === 0 ||
+        maslowStatus.bl === 0
+    ) {
+      // extend all
+      currentStep = 1;
+    } else if (maslowStatus.extended) {
+      //  hang it?
+      currentStep = 2;
+    } else {
+      currentStep = 3;
+    }
   } else {
     currentStep = -1;
   }
@@ -36,7 +49,7 @@ function hideCalibrationWizard() {
     if (!maslowStatus.homed) {
       window.location.reload(); // will end up back here...
     } else {
-      id('tablettab').click();
+      id('tablettablink').click();
     }
   }, 2000);
 
@@ -58,6 +71,7 @@ function calibrationPreviousStep() {
 
 function calibrationNextStep() {
   if (currentStep < steps.length - 1) {
+    sendCommand("$MINFO");
     currentStep++;
     calibrationShowStep(currentStep);
   } else {
