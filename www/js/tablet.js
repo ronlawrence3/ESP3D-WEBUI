@@ -306,7 +306,7 @@ function tabletShowMessage(msg, collecting) {
     maslowStatus = JSON.parse(msg.substring(7));
     if (!maslowStatus.homed) {
       setHTML('calmessage', 'Maslow is not homed!');
-      id('calwiztablink').click();
+      // id('calwiztablink').click();
     }
     return;
   }
