@@ -307,6 +307,12 @@ function tabletShowMessage(msg, collecting) {
     if (!maslowStatus.homed) {
       setHTML('calmessage', 'Maslow is not homed!');
       // id('calwiztablink').click();
+    } else if (!maslowStatus.extended) {
+      setHTML('calmessage', 'Maslow is not extended!');
+    } else if (maslowStatus.calibrationInProgress) {
+      setHTML('calmessage', 'Maslow is in the process of calibration');
+    } else {
+      setHTML('calmessage', '');
     }
     return;
   }
