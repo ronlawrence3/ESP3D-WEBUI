@@ -18,7 +18,7 @@ function showCalibrationWizard(message) {
     ) {
       // extend all
       currentStep = 1;
-    } else if (maslowStatus.extended) {
+    } else if (!maslowStatus.extended) {
       //  hang it?
       currentStep = 2;
     } else {
@@ -60,6 +60,8 @@ function calibrationShowStep(stepIndex) {
     steps[i].style.display = 'none';
   }
   steps[stepIndex].style.display = 'block';
+  id("stepnumber").innerText = stepIndex + 1;
+  id("totalsteps").innerText = steps.length;
 }
 
 function calibrationPreviousStep() {
