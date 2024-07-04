@@ -6,7 +6,14 @@ var sndok = true
 
 var lastHeartBeatTime = new Date().getTime();
 
-var versionNumber = 0.78
+var versionNumber = 0.79
+
+//Print the version number to the console
+let msgWindow = document.getElementById('messages')
+let text = msgWindow.textContent
+text = text + '\n' + "Index.html Version: " + versionNumber
+msgWindow.textContent = text
+msgWindow.scrollTop = msgWindow.scrollHeight
 
 function beep(vol, freq, duration) {
   if (snd == null) {
@@ -91,6 +98,12 @@ inputBlurred = function () {
 zeroAxis = function (axis) {
   tabletClick()
   setAxisByValue(axis, 0)
+
+  let msgWindow = document.getElementById('messages')
+  let text = msgWindow.textContent
+  text += '\n' + "Home pos set for: " + axis
+  msgWindow.textContent = text
+  msgWindow.scrollTop = msgWindow.scrollHeight
 }
 
 toggleUnits = function () {
@@ -171,6 +184,13 @@ sendMove = function (cmd) {
       s += key + params[key]
     }
     jogTo(s)
+
+    let msgWindow = document.getElementById('messages')
+    let text = msgWindow.textContent
+    text += '\n' + "Jog: " + s
+    msgWindow.textContent = text
+    msgWindow.scrollTop = msgWindow.scrollHeight
+
   }
   var move = function (params) {
     params = params || {}
@@ -323,32 +343,8 @@ function tabletShowMessage(msg, collecting) {
     return
   }
 
-  //These are used for generating the working area in the background
-  if (msg.startsWith('$/axes/x/max_travel_mm=')) {
-    displayer.setXTravel(parseFloat(msg.substring(23, msg.length)))
-    return;
-  }
-  if (msg.startsWith('$/axes/y/max_travel_mm=')) {
-    displayer.setYTravel(parseFloat(msg.substring(23, msg.length)))
-    return;
-  }
-
-  if (msg.startsWith('$/axes/x/homing/mpos_mm=')) {
-    displayer.setXHome(parseFloat(msg.substring(24, msg.length)))
-    return;
-  }
-  if (msg.startsWith('$/axes/y/homing/mpos_mm=')) {
-    displayer.setYHome(parseFloat(msg.substring(24, msg.length)))
-    return;
-  }
-
-  if (msg.startsWith('$/axes/x/homing/positive_direction=')) {
-    displayer.setXDir(msg.substring(35, msg.length))
-    return;
-  }
-  if (msg.startsWith('$/axes/y/homing/positive_direction=')) {
-    displayer.setYDir(msg.substring(35, msg.length))
-    return;
+  if(msg.startsWith('[GC')){
+    return
   }
 
   //These are used for populating the configuraiton popup
@@ -534,6 +530,13 @@ function doPlayButton() {
   if (playButtonHandler) {
     playButtonHandler()
   }
+
+  let msgWindow = document.getElementById('messages')
+  let text = msgWindow.textContent
+  text += '\n' + "Starting File: " + document.getElementById('filelist').options[selectElement.selectedIndex].text
+  msgWindow.textContent = text
+  msgWindow.scrollTop = msgWindow.scrollHeight
+
 }
 
 var pauseButtonHandler
@@ -853,22 +856,6 @@ function showGCode(gcode) {
   setRunControls()
 }
 
-var machineBboxAsked = false
-
-function askMachineBbox() {
-  if (machineBboxAsked) {
-    return
-  }
-  machineBboxAsked = true
-  SendPrinterCommand('$/axes/x/max_travel_mm')
-  SendPrinterCommand('$/axes/x/homing/mpos_mm')
-  SendPrinterCommand('$/axes/x/homing/positive_direction')
-
-  SendPrinterCommand('$/axes/y/max_travel_mm')
-  SendPrinterCommand('$/axes/y/homing/mpos_mm')
-  SendPrinterCommand('$/axes/y/homing/positive_direction')
-}
-
 function nthLineEnd(str, n) {
   if (n <= 0) return 0
   var L = str.length,
@@ -1164,7 +1151,6 @@ function fullscreenIfMobile() {
 
 id('tablettablink').addEventListener('DOMActivate', fullscreenIfMobile, false)
 
-id('tablettab').addEventListener('activate', askMachineBbox, false)
 
 // setMessageHeight(), with these helper functions, adjusts the size of the message
 // window to fill the height of the screen.  It would be nice if we could do that

@@ -14,15 +14,6 @@ tp.strokeStyle = 'black';
 
 var cameraAngle = 0;
 
-var xMaxTravel = 2438;
-var yMaxTravel = 2438/2;
-
-var xHomePos = 2438/2;
-var yHomePos = 2438/4;
-
-var xHomeDir = 1;
-var yHomeDir = 1;
-
 var tlX = -8.339;
 var tlY = 2209;
 var trX = 3505; 
@@ -397,34 +388,14 @@ var drawOrigin = function(radius) {
 var drawMachineBounds = function() {
     
     //Work codinates offset the maxTravel part centers it in the view so 0,0 is the middle of the sheet
-    const wcoX = MPOS[0] - WPOS[0] - xMaxTravel/2;
-    const wcoY = MPOS[1] - WPOS[1] - yMaxTravel/2;
-
-    var xMin = 0;
-    var YMin = 0;
-
-    if(xHomeDir == 1){
-        xMin = xHomePos - xMaxTravel;
-    }
-    else{
-        xMin = xHomePos;
-    }
-
-    if(yHomeDir == 1){
-        yMin = yHomePos - yMaxTravel;
-    }
-    else{
-        yMin = yHomePos;
-    }
-
-    const xMax = xMin + xMaxTravel;
-    const yMax = yMin + yMaxTravel;
+    var woodWidth = 2438;
+    var woodHeight = 2438/2;
 
     //Project onto the camera view
-    const p0 = projection({x: xMin - wcoX, y: yMin - wcoY, z: 0});
-    const p1 = projection({x: xMin - wcoX, y: yMax - wcoY, z: 0});
-    const p2 = projection({x: xMax - wcoX, y: yMax - wcoY, z: 0});
-    const p3 = projection({x: xMax - wcoX, y: yMin - wcoY, z: 0});
+    const p0 = projection({x: -woodWidth/2, y: -woodHeight/2, z: 0});
+    const p1 = projection({x: woodWidth/2, y: -woodHeight/2, z: 0});
+    const p2 = projection({x: woodWidth/2, y: woodHeight/2, z: 0});
+    const p3 = projection({x: -woodWidth/2, y: woodHeight/2, z: 0});
 
     //This is used to fit everything in the camera view later
     tpBbox.min.x = Math.min(tpBbox.min.x, p0.x);
@@ -971,27 +942,6 @@ ToolpathDisplayer.prototype.reDrawTool = function(modal, dpos) {
         tp.putImageData(toolSave, toolX, toolY);
         drawTool(dpos);
     }
-}
-
-ToolpathDisplayer.prototype.setXTravel = function(maxTravelX) {
-    xMaxTravel = maxTravelX;
-}
-ToolpathDisplayer.prototype.setYTravel = function(maxTravelY) {
-    yMaxTravel = maxTravelY;
-}
-
-ToolpathDisplayer.prototype.setXHome = function(xHomeInternal) {
-    xHomePos = xHomeInternal;
-}
-ToolpathDisplayer.prototype.setYHome = function(yHomeInternal) {
-    yHomePos = yHomeInternal;
-}
-
-ToolpathDisplayer.prototype.setXDir = function(xDir) {
-    xHomeDir = (xDir == "true") ? 1 : -1;
-}
-ToolpathDisplayer.prototype.setYDir = function(yDir) {
-    yHomeDir =  (yDir == "true") ? 1 : -1;
 }
 
 displayer = new ToolpathDisplayer();
