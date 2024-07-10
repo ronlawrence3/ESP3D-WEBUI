@@ -14,6 +14,7 @@ let text = msgWindow.textContent
 text = text + '\n' + "Index.html Version: " + versionNumber
 msgWindow.textContent = text
 msgWindow.scrollTop = msgWindow.scrollHeight
+var TELEM_ON = false;
 
 function beep(vol, freq, duration) {
   if (snd == null) {
@@ -1352,4 +1353,11 @@ const onCalibrationButtonsClick = async (command, msg) => {
 
 }
 
+const debugCalibration = async () => {
+  sendCommand('$TELEM=1');
+  sendCommand('$CAL');
+  // toggle state to gather telem
+  TELEM_ON=true;
+
+}
 /* Calibration modal END */

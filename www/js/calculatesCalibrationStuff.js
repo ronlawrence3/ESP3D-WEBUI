@@ -501,6 +501,16 @@ function scaleMeasurementsBasedOnTension(measurements, guess) {
   return newMeasurements
 }
 
+function dumpDebugInfo(turnOnTelemetry) {
+  if (TELEM_ON) {
+    sendCommand('$TELEM=0');
+    sendCommand('$TELEMDUMP');
+    if (turnOnTelemetry == true) {
+      sendCommand('$TELEM=1');
+    }
+  }
+}
+
 
 function findMaxFitness(measurements) {
 
@@ -580,6 +590,9 @@ function findMaxFitness(measurements) {
               refreshSettings(current_setting_filter);
               saveMaslowYaml();
 
+              // if telemtry is on, dump it, and turn it back on
+              dumpDebugInfo(true);
+
               messagesBox.textContent += '\nA command to save these values has been successfully sent for you. Please check for any error messages.';
               messagesBox.scrollTop
               messagesBox.scrollTop = messagesBox.scrollHeight;
@@ -592,6 +605,9 @@ function findMaxFitness(measurements) {
                 onCalibrationButtonsClick('$CAL','Calibrate')
               }, 2000);
           } else {
+              // if telemtry is on, dump it, and don't turn it back on
+              dumpDebugInfo(false);
+
               sendCalibrationEvent({
                 good: false,
                 final: true,
@@ -604,7 +620,6 @@ function findMaxFitness(measurements) {
   // Start the iteration
   iterate();
 }
-
 
 /**
  * This function will allow us to hook data into events that we can just copy this file into another project

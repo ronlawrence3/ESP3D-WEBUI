@@ -905,3 +905,9 @@ textarea {
 .calibration-wizard-step {
   display: none;
 }
+
+.debug-btn {
+  margin: 20px;
+  background-color: #777;
+  height: 45px;
+}

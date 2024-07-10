@@ -2,6 +2,21 @@
   <div id="tablet-listener">
     <div class = "maslow">
       <div class = "display tablettab-canvas-wrapper" >
+        <div class="navbar-default" style="display: flex;max-height: 40px;">
+          <li>
+            <button class="btn btn-primary" onclick="files_select_upload()">
+              <svg width="1.3em" height="1.2em" viewBox="0 0 1792 1792" fill="currentColor">
+                <g>
+                  <path d="M1344 1472q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm256 0q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm128-224v320q0 40-28 68t-68 28h-1472q-40 0-68-28t-28-68v-320q0-40 28-68t68-28h427q21 56 70.5 92t110.5 36h256q61 0 110.5-36t70.5-92h427q40 0 68 28t28 68zm-325-648q-17 40-59 40h-256v448q0 26-19 45t-45 19h-256q-26 0-45-19t-19-45v-448h-256q-42 0-59-40-17-39 14-69l448-448q18-19 45-19t45 19l448 448q31 30 14 69z"/>
+                </g>
+              </svg>
+              <span> Upload gcode</span>
+            </button>
+          </li>
+          <select id="filelist" onchange="selectFile()" style="height: 40px;">
+            <option>Load File...</option>
+          </select>
+         </div>
         <canvas id="small-toolpath" class="previewer" style="width: 100%; height: 100%"></canvas>
         <textarea style="border:  none" class="gcode" id="gcode" rows="8" placeholder="GCode File Display" spellcheck="false" readonly>
         </textarea>
@@ -13,15 +28,7 @@
           </div>
           <div class="maslow-grid-item maslow-grid-item-btn" style="background-color: #9d88c0;" onclick="sendMove('Y+')"><canvas id="upBtn" style="width: 100%; height: 100%"></canvas></div>
           <div class="maslow-grid-item maslow-grid-item-btn" style="background-color: #b69fcb;" onclick="sendMove('X+Y+')"><canvas id="trBtn" style="width: 100%; height: 100%"></canvas></div>
-          <div class="maslow-grid-item maslow-grid-item-btn" style="background-color: #337ab7; color: white; height: 50px;display: flex;flex-direction: column;"
-            onclick="files_select_upload()">
-            <svg width="1.3em" height="1.2em" viewBox="0 0 1792 1792" fill="currentColor">
-              <g>
-                <path d="M1344 1472q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm256 0q0-26-19-45t-45-19-45 19-19 45 19 45 45 19 45-19 19-45zm128-224v320q0 40-28 68t-68 28h-1472q-40 0-68-28t-28-68v-320q0-40 28-68t68-28h427q21 56 70.5 92t110.5 36h256q61 0 110.5-36t70.5-92h427q40 0 68 28t28 68zm-325-648q-17 40-59 40h-256v448q0 26-19 45t-45 19h-256q-26 0-45-19t-19-45v-448h-256q-42 0-59-40-17-39 14-69l448-448q18-19 45-19t45 19l448 448q31 30 14 69z"/>
-              </g>
-            </svg>
-            <span>Upload GCode</span>
-          </div>
+          <div class="maslow-grid-item maslow-grid-item-btn" style="background-color: #337ab7; color: white; height: 50px;display: flex;flex-direction: column;"> </div>
           <div class="maslow-grid-item maslow-grid-item-btn" style="background-color: #9d88c0;" onclick="sendMove('X-')"><canvas id="lBtn" style="width: 100%; height: 100%"></div>
           <div class="maslow-grid-item maslow-grid-item-btn" style="background-color: #f2f0e4;" onclick="moveHome()"><canvas id="hBtn" style="width: 100%; height: 100%"></div>
           <div class="maslow-grid-item maslow-grid-item-btn" style="background-color: #9d88c0;" onclick="sendMove('X+')"><canvas id="rBtn" style="width: 100%; height: 100%"></div>
@@ -56,9 +63,9 @@
             onmousedown="zeroAxis('X');zeroAxis('Y');" onmouseup="refreshGcode();">Define Home</div>
         </div>
         <div class="maslow-grid-container tablettab-controls-item" style="height: 60px;">
-          <select class="form-control" id="filelist" onchange="selectFile()">
-            <option>Load File...</option>
-          </select>
+          <div class="maslow-grid-item maslow-grid-item-btn" style="background-color: #f2f0e4;" id="units" title="Telemtry on" onclick="sendCommand('$TELEM=1')">telemetry on</div>
+          <div class="maslow-grid-item maslow-grid-item-btn" style="background-color: #f2f0e4;" id="units" title="Telemtry off" onclick="sendCommand('$TELEM=0')">telemetry off</div>
+          <div class="maslow-grid-item maslow-grid-item-btn" style="background-color: #f2f0e4;" id="units" title="Telemtry dump" onclick="sendCommand('$TELEMDUMP')">telemetry dump</div>
         </div>
         <div class="maslow-grid-container tablettab-controls-item" style="grid-template-columns: 33% 33% 33%;">
           <div class="maslow-grid-item maslow-grid-item-btn" style="background-color: #4aa85c;" onclick="doPlayButton()">
@@ -152,6 +159,7 @@
               <div class="buttons-row">
                 <button class="calibration-modal-button" onclick="onCalibrationButtonsClick('$TEST','Test');">Test</button>
                 <button class="calibration-modal-button" onclick="onCalibrationButtonsClick('$CMP','Release Tension');">Release Tension</button>
+                <button class="calibration-modal-button debug-btn" onclick="debugCalibration(); hideModal('configuration-popup')">debug cal</button>
               </div>
 
             </div>
